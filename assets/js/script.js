@@ -1,6 +1,5 @@
 // Wait for the DOM to finish loading before running the game
 // Get the button elements and add event listeners to them
-
 document.addEventListener("DOMContentLoaded", function () {
     let buttons = document.getElementsByTagName("button");
 
@@ -22,7 +21,6 @@ document.addEventListener("DOMContentLoaded", function () {
  * The main game "loop", called when the script is first loaded
  * and after the user's answer has been processed
  */
-
 function runGame(gameType) {
     // Creates two random numbers between 1 and 25
     let num1 = Math.floor(Math.random() * 25) + 1;
@@ -46,8 +44,10 @@ function checkAnswer() {
 
     if (isCorrect) {
         alert("Hey! You got it right!");
+        incrementScore();
     } else {
         alert(`Awww.. You answered ${userAnswer}. The correct answer was ${calculatedAnswer[0]}`);
+        incrementWrongAnswer();
     }
     runGame(calculatedAnswer[1]);
 
@@ -72,12 +72,20 @@ function calculateCorrectAnswer() {
     }
 }
 
+/**
+ * Gets the current score from the DOM and increments it by 1
+ */
 function incrementScore() {
-
+    let oldScore = parseInt(document.getElementById("score").innerText); // get value from DOM is string
+    document.getElementById("score").innerText = ++oldScore // oldScore++ will miss the update timing
 }
 
+/**
+ * Gets the current tally (a current score or amount) of incorrect answers from the DOM and increments it by 1
+ */
 function incrementWrongAnswer() {
-
+    let oldScore = parseInt(document.getElementById("incorrect").innerText);
+    document.getElementById("incorrect").innerText = ++oldScore; // ++ oldScore
 }
 
 // Called from runGame() with num1, num2 arguments. This parameter operand1,2 are used only in this function
@@ -85,8 +93,6 @@ function displayAdditionQuestion(operand1, operand2) {
     document.getElementById('operand1').textContent = operand1;
     document.getElementById('operand2').textContent = operand2;
     document.getElementById('operator').textContent = "+";
-
-
 }
 
 function displaySubtractQuestion() {
